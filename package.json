@@ -1,0 +1,49 @@
+{
+  "name": "nuxt-pleasure",
+  "version": "1.0.0",
+  "main": "dist/nuxt-pleasure.js",
+  "module": "dist/nuxt-pleasure.esm.js",
+  "author": "Martin Rafael Gonzalez <tin@devtin.io>",
+  "license": "MIT",
+  "scripts": {
+    "build": "rollup -c rollup.config.js",
+    "build:live": "nodemon -w src -w rollup.config.js --exec yarn build",
+    "lint": "eslint 'src/**/*.{js,vue}'"
+  },
+  "devDependencies": {
+    "@vue/test-utils": "^1.0.0-beta.29",
+    "ava": "^1.4.1",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-html": "^5.0.3",
+    "eslint-plugin-import": "^2.17.1",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^5.2.2",
+    "nodemon": "^1.18.11",
+    "rollup": "^1.10.0",
+    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-vue": "^5.0.0",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "dependencies": {
+    "deepmerge": "^3.2.0",
+    "dot-object": "^1.7.1",
+    "element-ui": "^2.7.2",
+    "lodash": "^4.17.11",
+    "pleasure": "file:../pleasure",
+    "postcss-calc": "^7.0.1",
+    "postcss-color-function": "^4.1.0",
+    "postcss-css-variables": "^0.12.0",
+    "postcss-hexrgba": "^1.0.1",
+    "postcss-inline-variables": "^1.0.1",
+    "postcss-loader": "^3.0.0",
+    "postcss-nested": "^4.1.2",
+    "postcss-preset-env": "^6.6.0",
+    "postcss-responsive-type": "^1.0.0",
+    "postcss-simple-vars": "^5.0.2",
+    "vue-pleasure": "file:../pleasure/src/ui/lib/vue-pleasure"
+  }
+}
