@@ -120,7 +120,7 @@ function Pleasure (options) {
   // console.log({ options })
   // console.log(`nuxt>>>`, this.options)
   this.options.modulesDir.push(...require.main.paths.filter(p => {
-    return currentModulesDir.indexOf(p) < 0
+    return this.options.modulesDir.indexOf(p) < 0
   }));
 
   if (options.setupUiLibrary) {
