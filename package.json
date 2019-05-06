@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "rollup -c rollup.config.js",
-    "build:live": "nodemon -w src -w rollup.config.js --exec yarn build",
+    "build:live": "nodemon -w src -w lib -w rollup.config.js --exec yarn build",
     "lint": "eslint 'src/**/*.{js,vue}'"
   },
   "devDependencies": {
