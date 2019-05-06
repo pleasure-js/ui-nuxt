@@ -7,6 +7,7 @@ import forOwn from 'lodash/forOwn'
 import get from 'lodash/get'
 import Dot from 'dot-object'
 import mapKeys from 'lodash/mapKeys'
+import fs from 'fs'
 
 const dot = new Dot('-')
 
@@ -54,24 +55,60 @@ const UiLibrary = {
 }
 
 /**
- * @typedef NuxtModuleConfig
- * @property {UiLibrary} uiLibrary - The UiLibrary to use.
+ * @typedef NuxtPleasureConfig
+ * This object will also be loaded from the local configuration using the scope `nuxtPleasure`.
+ *
+ * ```js
+ * // pleasure.config.js
+ * module.exports = {
+ *   nuxtPleasure: {
+ *     // ...{NuxtPleasureConfig}
+ *   }
+ * }
+ * ```
+ *
+ * @property {UiLibrary} [uiLibrary={UiLibrary.ELEMENT_UI}] - The UI Library to use. See {@link UiLibrary}.
+ * @property {Boolean} [setupUiLibrary=true] - Whether to setup the library or not.
+ * @property {Object} [postCssVariables] - Optional object variables for `postcss-css-variables`.
+ * @property {String[]} [watchForRestart] - Array of files or directories to watch and auto restart the application on change.
+ * @property {Boolean} [i18n=true] - Whether to activate i18n for Vue or not.
+ * @property {String} [localesPath=<srcDir>/locales] - Directory where to load the `.js` or `.json` files containing the
+ * dictionary, relative to `<srcDir>`.
+ *
+ * @example Providing a set of locales
+ *```
+ * project
+ * └───<srcDir>
+ *     └───locales
+ *         |   [ISO-639-1].(js|json)
+ *         |   [ISO-639-1].(js|json)
+ * ```
+ *
+ * ```js
+ * // pleasure.config.js
+ * module.exports = {
+ *   nuxtPleasure: {
+ *     i18n: true,
+ *     localesPath: 'locales/'
+ *   }
+ * }
+ * ```
  */
 export const config = {
   uiLibrary: UiLibrary.ELEMENT_UI,
-  setupUiLibrary: true
+  setupUiLibrary: true,
+  localesPath: 'locales',
+  i18n: true
 }
 
 /**
  * Module nuxt-pleasure.
- * @param {Object} options
- * @param {Object} [options.locales] - Activate i18n with these set of locales.
- * @function
+ * @param {NuxtPleasureConfig} options
  */
 export default function Pleasure (options) {
-  const plsConfig = getConfig(null, true)
+  const { nuxtPleasure = {} } = getConfig(null, true)
 
-  options = merge.all([{}, config, options])
+  options = merge.all([{}, config, nuxtPleasure, options])
   Object.assign(this.options.env, PleasureEnv)
   // console.log({ options })
   // console.log(`nuxt>>>`, this.options)
@@ -85,6 +122,27 @@ export default function Pleasure (options) {
 
   this.addPlugin(resolve(`lib/nuxt-element-ui-pleasure-plugin.js`))
   this.addPlugin(resolve(`lib/nuxt-pleasure-plugin.js`))
+
+  if (options.i18n) {
+    this.addPlugin(resolve(`lib/nuxt-i18n-plugin.js`))
+    const localesPath = path.resolve(this.options.srcDir, options.localesPath)
+    const locales = {}
+    if (fs.existsSync(localesPath)) {
+      fs.readdirSync(localesPath).forEach(file => {
+        if (!file || /\^.+$/.test(file)) {
+          return
+        }
+
+        const iso = file.replace(/\..+$/, '')
+        locales[iso] = require(path.join(localesPath, file))
+      })
+    }
+
+    this.options.env.$pleasure = merge(get(this.options, 'env.$pleasure', {}), {
+      locales
+    })
+  }
+
   this.options.build.watch.push(plsConfig.api.entitiesPath)
   this.options.build.watch.push(findRoot('./pleasure.config.js'))
 
