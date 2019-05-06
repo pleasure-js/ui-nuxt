@@ -10,6 +10,9 @@
     "build:live": "nodemon -w src -w lib -w rollup.config.js --exec yarn build",
     "lint": "eslint 'src/**/*.{js,vue}'"
   },
+  "nodemonConfig": {
+    "ext": "js,json,vue,pcss,css,md"
+  },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.29",
     "ava": "^1.4.1",
