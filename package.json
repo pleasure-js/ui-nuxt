@@ -29,13 +29,8 @@
     "rollup": "^1.10.0",
     "rollup-plugin-commonjs": "^9.3.4",
     "rollup-plugin-vue": "^5.0.0",
-    "vue-template-compiler": "^2.6.10"
-  },
-  "dependencies": {
-    "deepmerge": "^3.2.0",
-    "dot-object": "^1.7.1",
-    "element-ui": "^2.7.2",
-    "lodash": "^4.17.11",
+    "vue-pleasure": "devtin/vue-pleasure",
+    "vue-template-compiler": "^2.6.10",
     "pleasure": "devtin/pleasure",
     "postcss-calc": "^7.0.1",
     "postcss-color-function": "^4.1.0",
@@ -46,7 +41,12 @@
     "postcss-nested": "^4.1.2",
     "postcss-preset-env": "^6.6.0",
     "postcss-responsive-type": "^1.0.0",
-    "postcss-simple-vars": "^5.0.2",
-    "vue-pleasure": "devtin/vue-pleasure"
+    "postcss-simple-vars": "^5.0.2"
+  },
+  "dependencies": {
+    "deepmerge": "^3.2.0",
+    "dot-object": "^1.7.1",
+    "element-ui": "^2.7.2",
+    "lodash": "^4.17.11"
   }
 }
