@@ -173,6 +173,52 @@ export default function Pleasure (options) {
     config.resolve.alias['@' + packageJson().name] = this.options.srcDir
     config.resolve.alias[path.relative(findRoot(), this.options.srcDir)] = this.options.srcDir
   })
+
+  this.extendRoutes((routes, resolve) => {
+    // read (view mode)
+/*
+    routes.push({
+      path: '/pleasure/view/:entity',
+      component: resolve(__dirname, '../lib/pages/pleasure-view.vue')
+    })
+*/
+
+    // list
+/*
+    routes.push({
+      path: '/pleasure/:entity',
+      component: resolve(__dirname, '../lib/pages/pleasure-list.vue')
+    })
+*/
+
+    // create
+    routes.push({
+      path: '/pleasure/create/:entity',
+      component: resolve(__dirname, '../lib/pages/pleasure-create.vue')
+    })
+
+    // update
+    routes.push({
+      path: '/pleasure/:entity/:entry',
+      component: resolve(__dirname, '../lib/pages/pleasure-update.vue')
+    })
+
+    // list
+    /*
+    - link to add
+    - link to remove (select multiple)
+    - list entries
+    - search entries
+    - filter
+    - sort
+     */
+/*
+    routes.push({
+      path: '/pleasure/:entity/:entry',
+      component: resolve(__dirname, '../lib/pages/pleasure-entry.vue')
+    })
+*/
+  })
 }
 
 // REQUIRED if publishing the module as npm package
