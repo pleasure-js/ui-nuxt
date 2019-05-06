@@ -36,7 +36,7 @@
     "dot-object": "^1.7.1",
     "element-ui": "^2.7.2",
     "lodash": "^4.17.11",
-    "pleasure": "file:../pleasure",
+    "pleasure": "devtin/pleasure",
     "postcss-calc": "^7.0.1",
     "postcss-color-function": "^4.1.0",
     "postcss-css-variables": "^0.12.0",
@@ -47,6 +47,6 @@
     "postcss-preset-env": "^6.6.0",
     "postcss-responsive-type": "^1.0.0",
     "postcss-simple-vars": "^5.0.2",
-    "vue-pleasure": "file:../pleasure/src/ui/lib/vue-pleasure"
+    "vue-pleasure": "devtin/vue-pleasure"
   }
 }
