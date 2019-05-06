@@ -34,8 +34,8 @@ const resolve = (...paths) => {
   return path.join(__dirname, '../', ...paths)
 };
 
-const nodeModule = (name = './') => {
-  return resolve('node_modules', name)
+const nodeModule = (name) => {
+  return require.resolve(name)
 };
 
 const UiLibraryLocation = {
@@ -116,10 +116,12 @@ function Pleasure (options) {
 
   options = merge.all([{}, config, nuxtPleasure, options]);
   Object.assign(this.options.env, PleasureEnv);
+
   // console.log({ options })
   // console.log(`nuxt>>>`, this.options)
-  this.options.modulesDir.push(nodeModule());
-  this.options.modulesDir.push(path.join(require.resolve('vue-pleasure'), '../../node_modules')); // nasty but ;)
+  this.options.modulesDir.push(...require.main.paths.filter(p => {
+    return currentModulesDir.indexOf(p) < 0
+  }));
 
   if (options.setupUiLibrary) {
     this.addPlugin(UiLibraryLocation[options.uiLibrary].setup);
