@@ -169,7 +169,7 @@ function Pleasure (options) {
   this.options.build.postcss.plugins['postcss-calc'] = true;
 
   // important
-  this.options.build.transpile.push('vue-pleasure');
+  this.options.build.transpile.push(/pleasure/);
 
   this.extendBuild((config) => {
     config.resolve.alias['@' + packageJson().name] = this.options.srcDir;
