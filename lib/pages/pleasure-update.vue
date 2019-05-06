@@ -9,7 +9,7 @@
   ></pleasure>
 </template>
 <script>
-  import pleasureClient from 'pleasure/dist/pleasure-client.js'
+  import pleasureClient from 'pleasure/src/ui/lib/pleasure-client'
 
   export default {
     async asyncData ({ route: { params: { entity, entry } } }) {
