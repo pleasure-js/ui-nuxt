@@ -113,7 +113,7 @@ function Pleasure (options) {
     PleasureEnv[`$pleasure.${ name }`] = value;
   });
 
-  merge(nuxtPleasure, omit(options, ['config', 'name', 'root', 'pleasureRoot']));
+  nuxtPleasure = merge.all([{}, _config, nuxtPleasure, omit(options, ['config', 'name', 'root', 'pleasureRoot'])]);
 
   console.log({ nuxtPleasure });
 
@@ -124,8 +124,6 @@ function Pleasure (options) {
   this.options.modulesDir.push(...require.main.paths.filter(p => {
     return this.options.modulesDir.indexOf(p) < 0
   }));
-
-  console.log(this.options.modulesDir);
 
   if (nuxtPleasure.setupUiLibrary) {
     this.addPlugin(UiLibraryLocation[nuxtPleasure.uiLibrary].setup);
@@ -179,7 +177,7 @@ function Pleasure (options) {
   this.options.build.postcss.plugins['postcss-calc'] = true;
 
   // important
-  const addTranspile = ['nuxt-pleasure', 'vue-pleasure', 'pleasure-client'];
+  const addTranspile = ['pleasure', 'nuxt-pleasure', 'vue-pleasure', 'pleasure-client'];
 
   const findPkg = (pkgName, ...paths) => {
     return path.resolve(path.dirname(require.resolve(pkgName)), '../', ...paths)
@@ -191,12 +189,11 @@ function Pleasure (options) {
 
   this.options.build.transpile.push(/pleasure/);
 
-  console.log(`transpile`, this.options.build.transpile);
-
-  this.options.modulesDir.shift(...addTranspile.filter(v => v !== 'nuxt-pleasure').map(p => {
-    console.log({ p });
+  this.options.modulesDir.unshift(...addTranspile.filter(v => v !== 'nuxt-pleasure' && v !== 'pleasure').map(p => {
     return findNodeModules(p)
   }));
+
+  this.options.modulesDir.unshift(path.join(__dirname, '../node_modules'));
 
   console.log(this.options.modulesDir);
 
