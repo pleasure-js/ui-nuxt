@@ -180,24 +180,30 @@ function Pleasure (options) {
   this.extendBuild((config) => {
     config.resolve.alias['@' + packageJson().name] = this.options.srcDir;
     config.resolve.alias[path.relative(pleasure.findRoot(), this.options.srcDir)] = this.options.srcDir;
+
+    Object.assign(config.resolve.alias, {
+      pleasure: path.resolve(path.dirname(require.resolve('pleasure')), '..')
+    });
+
+    console.log(`alias`, config.resolve.alias);
   });
 
   this.extendRoutes((routes, resolve) => {
     // read (view mode)
-/*
-    routes.push({
-      path: '/pleasure/view/:entity',
-      component: resolve(__dirname, '../lib/pages/pleasure-view.vue')
-    })
-*/
+    /*
+        routes.push({
+          path: '/pleasure/view/:entity',
+          component: resolve(__dirname, '../lib/pages/pleasure-view.vue')
+        })
+    */
 
     // list
-/*
-    routes.push({
-      path: '/pleasure/:entity',
-      component: resolve(__dirname, '../lib/pages/pleasure-list.vue')
-    })
-*/
+    /*
+        routes.push({
+          path: '/pleasure/:entity',
+          component: resolve(__dirname, '../lib/pages/pleasure-list.vue')
+        })
+    */
 
     // create
     routes.push({
@@ -220,12 +226,12 @@ function Pleasure (options) {
     - filter
     - sort
      */
-/*
-    routes.push({
-      path: '/pleasure/:entity/:entry',
-      component: resolve(__dirname, '../lib/pages/pleasure-entry.vue')
-    })
-*/
+    /*
+        routes.push({
+          path: '/pleasure/:entity/:entry',
+          component: resolve(__dirname, '../lib/pages/pleasure-entry.vue')
+        })
+    */
   });
 }
 
