@@ -2,17 +2,16 @@ import path from 'path'
 import merge from 'deepmerge'
 import castArray from 'lodash/castArray'
 import kebabCase from 'lodash/kebabCase'
-import { getConfig, findRoot, tools } from 'pleasure'
 import forOwn from 'lodash/forOwn'
 import get from 'lodash/get'
 import Dot from 'dot-object'
 import mapKeys from 'lodash/mapKeys'
 import fs from 'fs'
+import omit from 'lodash/omit'
 
 const dot = new Dot('-')
 
-const { packageJson } = tools
-const plsConfig = getConfig()
+// const plsConfig = getConfig()
 
 const PleasureEnv = {
   $pleasure: true,
@@ -20,9 +19,9 @@ const PleasureEnv = {
     ui: 'element-ui'
   }
 }
-forOwn(plsConfig, (value, name) => {
+/*forOwn(plsConfig, (value, name) => {
   PleasureEnv[`$pleasure.${ name }`] = value
-})
+})*/
 
 const resolve = (...paths) => {
   return path.join(__dirname, '../', ...paths)
@@ -94,7 +93,7 @@ const UiLibrary = {
  * }
  * ```
  */
-export const config = {
+export const _config = {
   uiLibrary: UiLibrary.ELEMENT_UI,
   setupUiLibrary: true,
   localesPath: 'locales',
@@ -106,9 +105,18 @@ export const config = {
  * @param {NuxtPleasureConfig} options
  */
 export default function Pleasure (options) {
-  const { nuxtPleasure = {} } = getConfig(null, true)
+  const { config, name, root, pleasureRoot } = options
+  let { nuxtPleasure } = config
+  console.log({ config, name, root, nuxtPleasure })
 
-  options = merge.all([{}, config, nuxtPleasure, options])
+  forOwn(config, (value, name) => {
+    PleasureEnv[`$pleasure.${ name }`] = value
+  })
+
+  merge(nuxtPleasure, omit(options, ['config', 'name', 'root', 'pleasureRoot']))
+
+  console.log({ nuxtPleasure })
+
   Object.assign(this.options.env, PleasureEnv)
 
   // console.log({ options })
@@ -117,17 +125,19 @@ export default function Pleasure (options) {
     return this.options.modulesDir.indexOf(p) < 0
   }))
 
-  if (options.setupUiLibrary) {
-    this.addPlugin(UiLibraryLocation[options.uiLibrary].setup)
-    this.options.css.push(...castArray(UiLibraryLocation[options.uiLibrary].css))
+  console.log(this.options.modulesDir)
+
+  if (nuxtPleasure.setupUiLibrary) {
+    this.addPlugin(UiLibraryLocation[nuxtPleasure.uiLibrary].setup)
+    this.options.css.push(...castArray(UiLibraryLocation[nuxtPleasure.uiLibrary].css))
   }
 
   this.addPlugin(resolve(`lib/nuxt-element-ui-pleasure-plugin.js`))
   this.addPlugin(resolve(`lib/nuxt-pleasure-plugin.js`))
 
-  if (options.i18n) {
+  if (nuxtPleasure.i18n) {
     this.addPlugin(resolve(`lib/nuxt-i18n-plugin.js`))
-    const localesPath = path.resolve(this.options.srcDir, options.localesPath)
+    const localesPath = path.resolve(this.options.srcDir, nuxtPleasure.localesPath)
     const locales = {}
     if (fs.existsSync(localesPath)) {
       fs.readdirSync(localesPath).forEach(file => {
@@ -145,8 +155,8 @@ export default function Pleasure (options) {
     })
   }
 
-  this.options.build.watch.push(plsConfig.api.entitiesPath)
-  this.options.build.watch.push(findRoot('./pleasure.config.js'))
+  this.options.build.watch.push(config.api.entitiesPath)
+  this.options.build.watch.push(path.join(root, './pleasure.config.js'))
 
   if (!this.options.build.postcss.plugins) {
     this.options.build.postcss.plugins = {}
@@ -161,7 +171,7 @@ export default function Pleasure (options) {
         }
     */
   }
-  const postCssVariables = mapKeys(dot.dot(get(plsConfig, `nuxtPleasure.postCssVariables`, {})), (v, k) => kebabCase(k).replace(/-default$/, ''))
+  const postCssVariables = mapKeys(dot.dot(get(nuxtPleasure, `postCssVariables`, {})), (v, k) => kebabCase(k).replace(/-default$/, ''))
 
   this.options.build.postcss.plugins['postcss-css-variables'] = { variables: postCssVariables }
   this.options.build.postcss.plugins['postcss-hexrgba'] = true
@@ -169,17 +179,34 @@ export default function Pleasure (options) {
   this.options.build.postcss.plugins['postcss-calc'] = true
 
   // important
+  const addTranspile = ['nuxt-pleasure', 'vue-pleasure', 'pleasure-client']
+
+  const findPkg = (pkgName, ...paths) => {
+    return path.resolve(path.dirname(require.resolve(pkgName)), '../', ...paths)
+  }
+
+  const findNodeModules = pkgName => {
+    return findPkg(pkgName, 'node_modules')
+  }
+
   this.options.build.transpile.push(/pleasure/)
 
+  console.log(`transpile`, this.options.build.transpile)
+
+  this.options.modulesDir.shift(...addTranspile.filter(v => v !== 'nuxt-pleasure').map(p => {
+    console.log({ p })
+    return findNodeModules(p)
+  }))
+
+  console.log(this.options.modulesDir)
+
   this.extendBuild((config) => {
-    config.resolve.alias['@' + packageJson().name] = this.options.srcDir
-    config.resolve.alias[path.relative(findRoot(), this.options.srcDir)] = this.options.srcDir
+    config.resolve.alias['@' + name] = this.options.srcDir
+    config.resolve.alias[path.relative(root, this.options.srcDir)] = this.options.srcDir
 
     Object.assign(config.resolve.alias, {
-      pleasure: path.resolve(path.dirname(require.resolve('pleasure')), '..')
+      pleasure: pleasureRoot
     })
-
-    console.log(`alias`, config.resolve.alias)
   })
 
   this.extendRoutes((routes, resolve) => {
@@ -227,6 +254,8 @@ export default function Pleasure (options) {
         })
     */
   })
+
+  fs.writeFileSync(path.join(process.cwd(), 'final.config.json'), JSON.stringify(this.options, null, 2))
 }
 
 // REQUIRED if publishing the module as npm package
