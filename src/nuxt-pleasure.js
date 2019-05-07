@@ -195,6 +195,7 @@ export default function Pleasure (options) {
 
   this.options.modulesDir.unshift(path.join(__dirname, '../node_modules'))
 
+  // todo: add yarn global node_modules
   console.log(this.options.modulesDir)
 
   this.extendBuild((config) => {
