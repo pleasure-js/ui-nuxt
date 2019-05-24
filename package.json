@@ -1,8 +1,8 @@
 {
-  "name": "nuxt-pleasure",
+  "name": "pleasure-ui-nuxt",
   "version": "1.0.0",
-  "main": "dist/nuxt-pleasure.js",
-  "module": "dist/nuxt-pleasure.esm.js",
+  "main": "dist/pleasure-ui-nuxt.js",
+  "module": "dist/pleasure-ui-nuxt.esm.js",
   "author": "Martin Rafael Gonzalez <tin@devtin.io>",
   "license": "MIT",
   "scripts": {
@@ -35,8 +35,9 @@
     "deepmerge": "^3.2.0",
     "dot-object": "^1.7.1",
     "element-ui": "2.7.2",
+    "font-awesome": "^4.7.0",
     "lodash": "^4.17.11",
-    "pleasure-client": "devtin/pleasure-client",
+    "pleasure-api-client": "keepwondering/pleasure-api-client",
     "postcss-calc": "^7.0.1",
     "postcss-color-function": "^4.1.0",
     "postcss-css-variables": "^0.12.0",
@@ -48,9 +49,9 @@
     "postcss-responsive-type": "^1.0.0",
     "postcss-simple-vars": "^5.0.2",
     "vue": "^2.6.10",
-    "vue-pleasure": "devtin/vue-pleasure"
+    "pleasure-ui-vue": "keepwondering/pleasure-ui-vue"
   },
   "peerDependencies": {
-    "pleasure": "devtin/pleasure"
+    "pleasure": "keepwondering/pleasure"
   }
 }

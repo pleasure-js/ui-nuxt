@@ -61,7 +61,8 @@ const UiLibrary = {
 
 /**
  * @typedef NuxtPleasureConfig
- * This object will also be loaded from the local configuration using the scope `nuxtPleasure`.
+ * This object will also be loaded from the local configuration using the scope `nuxtPleasure` an will be attached to
+ * the process env.
  *
  * ```js
  * // pleasure.config.js
@@ -113,15 +114,12 @@ const _config = {
 function Pleasure (options) {
   const { config, name, root, pleasureRoot } = options;
   let { nuxtPleasure } = config;
-  console.log({ config, name, root, nuxtPleasure });
 
   forOwn(config, (value, name) => {
     PleasureEnv[`$pleasure.${ name }`] = value;
   });
 
   nuxtPleasure = merge.all([{}, _config, nuxtPleasure, omit(options, ['config', 'name', 'root', 'pleasureRoot'])]);
-
-  console.log({ nuxtPleasure });
 
   Object.assign(this.options.env, PleasureEnv);
 
@@ -137,7 +135,7 @@ function Pleasure (options) {
   }
 
   this.addPlugin(resolve(`lib/nuxt-element-ui-pleasure-plugin.js`));
-  this.addPlugin(resolve(`lib/nuxt-pleasure-plugin.js`));
+  this.addPlugin(resolve(`lib/pleasure-ui-nuxt-plugin.js`));
 
   if (nuxtPleasure.i18n) {
     this.addPlugin(resolve(`lib/nuxt-i18n-plugin.js`));
@@ -159,8 +157,10 @@ function Pleasure (options) {
     });
   }
 
-  this.options.build.watch.push(config.api.entitiesPath);
-  this.options.build.watch.push(path.join(root, './pleasure.config.js'));
+/*
+  this.options.build.watch.push(config.api.entitiesPath)
+  this.options.build.watch.push(path.join(root, './pleasure.config.js'))
+*/
 
   if (!this.options.build.postcss.plugins) {
     this.options.build.postcss.plugins = {};
@@ -183,7 +183,7 @@ function Pleasure (options) {
   this.options.build.postcss.plugins['postcss-calc'] = true;
 
   // important
-  const addTranspile = ['pleasure', 'nuxt-pleasure', 'vue-pleasure', 'pleasure-client'];
+  const addTranspile = ['pleasure', 'pleasure-ui-nuxt', 'pleasure-ui-vue', 'pleasure-api-client'];
 
   const findPkg = (pkgName, ...paths) => {
     return path.resolve(path.dirname(require.resolve(pkgName)), '../', ...paths)
@@ -195,14 +195,15 @@ function Pleasure (options) {
 
   this.options.build.transpile.push(/pleasure/);
 
-  this.options.modulesDir.unshift(...addTranspile.filter(v => v !== 'nuxt-pleasure' && v !== 'pleasure').map(p => {
+  this.options.modulesDir.unshift(...addTranspile.filter(v => v !== 'pleasure-ui-nuxt' && v !== 'pleasure').map(p => {
     return findNodeModules(p)
   }));
 
+  this.options.modulesDir.unshift(path.join(__dirname, '..'));
   this.options.modulesDir.unshift(path.join(__dirname, '../node_modules'));
 
   // todo: add yarn global node_modules
-  console.log(this.options.modulesDir);
+  // console.log(this.options.modulesDir)
 
   this.extendBuild((config) => {
     config.resolve.alias['@' + name] = this.options.srcDir;

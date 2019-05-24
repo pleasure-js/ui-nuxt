@@ -9,12 +9,13 @@
   ></pleasure>
 </template>
 <script>
-  import pleasureClient from 'pleasure-client'
+  import { PleasureApiClient } from 'pleasure-api-client'
+  const pleasureApiClient = PleasureApiClient.instance()
 
   export default {
     async asyncData ({ route: { params: { entity, entry } } }) {
       return {
-        value: await pleasureClient.read(entity, entry),
+        value: await pleasureApiClient.read(entity, entry),
         entity,
         entry
       }

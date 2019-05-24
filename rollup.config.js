@@ -2,14 +2,14 @@ const commonjs = require('rollup-plugin-commonjs')
 const vue = require('rollup-plugin-vue')
 
 module.exports = {
-  input: 'src/nuxt-pleasure.js',
+  input: 'src/pleasure-ui-nuxt.js',
   output: [
     {
-      file: 'dist/nuxt-pleasure.js',
+      file: 'dist/pleasure-ui-nuxt.js',
       format: 'cjs'
     },
     {
-      file: 'dist/nuxt-pleasure.esm.js',
+      file: 'dist/pleasure-ui-nuxt.esm.js',
       format: 'esm'
     }
   ],
