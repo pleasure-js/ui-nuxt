@@ -56,15 +56,15 @@ const UiLibrary = {
 }
 
 /**
- * @typedef NuxtPleasureConfig
- * This object will also be loaded from the local configuration using the scope `nuxtPleasure` an will be attached to
+ * @typedef PleasureNuxtConfig
+ * This object will also be loaded from the local configuration using the scope `config` an will be attached to
  * the process env.
  *
  * ```js
  * // pleasure.config.js
  * module.exports = {
- *   nuxtPleasure: {
- *     // ...{NuxtPleasureConfig}
+ *   ui: {
+ *     // ...{PleasureNuxtConfig}
  *   }
  * }
  * ```
@@ -89,7 +89,7 @@ const UiLibrary = {
  * ```js
  * // pleasure.config.js
  * module.exports = {
- *   nuxtPleasure: {
+ *   ui: {
  *     i18n: true,
  *     localesPath: 'locales/'
  *   }
@@ -104,18 +104,19 @@ export const _config = {
 }
 
 /**
- * Module nuxt-pleasure.
+ * Module pleasure-ui-nuxt
  * @param {NuxtPleasureConfig} options
  */
 export default function Pleasure (options) {
-  const { config, name, root, pleasureRoot } = options
-  let { nuxtPleasure } = config
+  const { name, root, pleasureRoot } = options
+  let { config } = options
 
   forOwn(config, (value, name) => {
     PleasureEnv[`$pleasure.${ name }`] = value
   })
 
-  nuxtPleasure = merge.all([{}, _config, nuxtPleasure, omit(options, ['config', 'name', 'root', 'pleasureRoot'])])
+  console.log({ _config, config, options, config })
+  config = merge.all([{}, _config, config, omit(options, ['config', 'name', 'root', 'pleasureRoot'])])
 
   Object.assign(this.options.env, PleasureEnv)
 
@@ -125,17 +126,17 @@ export default function Pleasure (options) {
     return this.options.modulesDir.indexOf(p) < 0
   }))
 
-  if (nuxtPleasure.setupUiLibrary) {
-    this.addPlugin(UiLibraryLocation[nuxtPleasure.uiLibrary].setup)
-    this.options.css.push(...castArray(UiLibraryLocation[nuxtPleasure.uiLibrary].css))
+  if (config.setupUiLibrary) {
+    this.addPlugin(UiLibraryLocation[config.uiLibrary].setup)
+    this.options.css.push(...castArray(UiLibraryLocation[config.uiLibrary].css))
   }
 
   this.addPlugin(resolve(`lib/nuxt-element-ui-pleasure-plugin.js`))
   this.addPlugin(resolve(`lib/pleasure-ui-nuxt-plugin.js`))
 
-  if (nuxtPleasure.i18n) {
+  if (config.i18n) {
     this.addPlugin(resolve(`lib/nuxt-i18n-plugin.js`))
-    const localesPath = path.resolve(this.options.srcDir, nuxtPleasure.localesPath)
+    const localesPath = path.resolve(this.options.srcDir, config.localesPath)
     const locales = {}
     if (fs.existsSync(localesPath)) {
       fs.readdirSync(localesPath).forEach(file => {
@@ -153,10 +154,10 @@ export default function Pleasure (options) {
     })
   }
 
-/*
-  this.options.build.watch.push(config.api.entitiesPath)
-  this.options.build.watch.push(path.join(root, './pleasure.config.js'))
-*/
+  /*
+    this.options.build.watch.push(config.api.entitiesPath)
+    this.options.build.watch.push(path.join(root, './pleasure.config.js'))
+  */
 
   if (!this.options.build.postcss.plugins) {
     this.options.build.postcss.plugins = {}
@@ -171,7 +172,7 @@ export default function Pleasure (options) {
         }
     */
   }
-  const postCssVariables = mapKeys(dot.dot(get(nuxtPleasure, `postCssVariables`, {})), (v, k) => kebabCase(k).replace(/-default$/, ''))
+  const postCssVariables = mapKeys(dot.dot(get(config, `postCssVariables`, {})), (v, k) => kebabCase(k).replace(/-default$/, ''))
 
   this.options.build.postcss.plugins['postcss-css-variables'] = { variables: postCssVariables }
   this.options.build.postcss.plugins['postcss-hexrgba'] = true
