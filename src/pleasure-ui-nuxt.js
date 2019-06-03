@@ -115,7 +115,7 @@ export default function Pleasure (options) {
     PleasureEnv[`$pleasure.${ name }`] = value
   })
 
-  console.log({ _config, config, options, config })
+  // console.log({ _config, config, options, config })
   config = merge.all([{}, _config, config, omit(options, ['config', 'name', 'root', 'pleasureRoot'])])
 
   Object.assign(this.options.env, PleasureEnv)
