@@ -108,6 +108,7 @@ const _config = {
  * @param {NuxtPleasureConfig} options
  */
 function Pleasure (options) {
+  console.log(`initializing nuxt pleasure`);
   const { name, root, pleasureRoot } = options;
   let { config } = options;
 

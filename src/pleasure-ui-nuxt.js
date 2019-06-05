@@ -108,6 +108,7 @@ export const _config = {
  * @param {NuxtPleasureConfig} options
  */
 export default function Pleasure (options) {
+  console.log(`initializing nuxt pleasure`)
   const { name, root, pleasureRoot } = options
   let { config } = options
 
