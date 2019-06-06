@@ -8,15 +8,15 @@ import Dot from 'dot-object'
 import mapKeys from 'lodash/mapKeys'
 import fs from 'fs'
 import omit from 'lodash/omit'
-import { getConfig } from 'pleasure-utils'
+import { getConfig } from 'pleasure-api'
 
 const dot = new Dot('-')
 
 // const plsConfig = getConfig()
-
-const config = dot.dot({
+console.log(`api`, getConfig())
+const config = mapKeys(dot.dot({
   pleasure: getConfig()
-}).replace(/\./g, '_').toUpperCase()
+}), (v, k) => kebabCase(k).replace(/-/g, '_').toUpperCase())
 
 console.log(`nuxt pleasure config`, config)
 

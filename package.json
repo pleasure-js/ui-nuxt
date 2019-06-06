@@ -37,6 +37,7 @@
     "element-ui": "2.7.2",
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.11",
+    "pleasure-api": "keepwondering/pleasure-api",
     "pleasure-api-client": "keepwondering/pleasure-api-client#v1-beta",
     "pleasure-ui-vue": "keepwondering/pleasure-ui-vue#v1-beta",
     "pleasure-utils": "keepwondering/pleasure-utils",
