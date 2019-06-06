@@ -8,10 +8,17 @@ import Dot from 'dot-object'
 import mapKeys from 'lodash/mapKeys'
 import fs from 'fs'
 import omit from 'lodash/omit'
+import { getConfig } from 'pleasure-utils'
 
 const dot = new Dot('-')
 
 // const plsConfig = getConfig()
+
+const config = dot.dot({
+  pleasure: getConfig()
+}).replace(/\./g, '_').toUpperCase()
+
+console.log(`nuxt pleasure config`, config)
 
 const PleasureEnv = {
   $pleasure: true,

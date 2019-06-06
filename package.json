@@ -38,6 +38,8 @@
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.11",
     "pleasure-api-client": "keepwondering/pleasure-api-client#v1-beta",
+    "pleasure-ui-vue": "keepwondering/pleasure-ui-vue#v1-beta",
+    "pleasure-utils": "keepwondering/pleasure-utils",
     "postcss-calc": "^7.0.1",
     "postcss-color-function": "^4.1.0",
     "postcss-css-variables": "^0.12.0",
@@ -48,8 +50,7 @@
     "postcss-preset-env": "^6.6.0",
     "postcss-responsive-type": "^1.0.0",
     "postcss-simple-vars": "^5.0.2",
-    "vue": "^2.6.10",
-    "pleasure-ui-vue": "keepwondering/pleasure-ui-vue#v1-beta"
+    "vue": "^2.6.10"
   },
   "peerDependencies": {
     "pleasure": "keepwondering/pleasure"

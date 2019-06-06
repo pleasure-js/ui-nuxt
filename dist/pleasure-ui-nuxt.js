@@ -14,10 +14,17 @@ var Dot = _interopDefault(require('dot-object'));
 var mapKeys = _interopDefault(require('lodash/mapKeys'));
 var fs = _interopDefault(require('fs'));
 var omit = _interopDefault(require('lodash/omit'));
+var pleasureUtils = require('pleasure-utils');
 
 const dot = new Dot('-');
 
 // const plsConfig = getConfig()
+
+const config = dot.dot({
+  pleasure: pleasureUtils.getConfig()
+}).replace(/\./g, '_').toUpperCase();
+
+console.log(`nuxt pleasure config`, config);
 
 const PleasureEnv = {
   $pleasure: true,
