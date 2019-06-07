@@ -25,7 +25,7 @@ const configEnv = objToENVFormat({
     client: {
       // todo: check if by ip is a better approach
       appURL: process.env.PLEASURE_CLIENT_APP_URL || `http://localhost:${ port }`,
-      appServerURL: process.env.PLEASURE_CLIENT_APP_SERVER_URL || `http://app:${ port }`,
+      appServerURL: process.env.PLEASURE_CLIENT_APP_SERVER_URL || `http://localhost:${ port }`,
       prefix,
       entitiesUri,
       authEndpoint,
