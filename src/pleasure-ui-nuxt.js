@@ -8,17 +8,34 @@ import Dot from 'dot-object'
 import mapKeys from 'lodash/mapKeys'
 import fs from 'fs'
 import omit from 'lodash/omit'
-import { getConfig } from 'pleasure-api'
+import { getConfig, getPlugins } from 'pleasure-api'
+
+const { pluginsConfig: { jwt: { authEndpoint, revokeEndpoint } } } = getPlugins()
 
 const dot = new Dot('-')
 
 // const plsConfig = getConfig()
-console.log(`api`, getConfig())
-const config = mapKeys(dot.dot({
-  pleasure: getConfig()
-}), (v, k) => kebabCase(k).replace(/-/g, '_').toUpperCase())
+const objToENVFormat = obj => {
+  return mapKeys(dot.dot(obj), (v, k) => kebabCase(k).replace(/-/g, '_').toUpperCase())
+}
 
-console.log(`nuxt pleasure config`, config)
+const { entitiesUri, prefix, port, timeout } = getConfig()
+const configEnv = objToENVFormat({
+  pleasure: {
+    client: {
+      // todo: check if by ip is a better approach
+      appURL: process.env.PLEASURE_APP_URL || `http://localhost:${ port }`,
+      appServerURL: process.env.PLEASURE_APP_SERVER_URL || `http://app:${ port }`,
+      prefix,
+      entitiesUri,
+      authEndpoint,
+      revokeEndpoint,
+      timeout
+    }
+  }
+})
+
+console.log(`configEnv>>>`, configEnv)
 
 const PleasureEnv = {
   $pleasure: true,
@@ -115,7 +132,6 @@ export const _config = {
  * @param {NuxtPleasureConfig} options
  */
 export default function Pleasure (options) {
-  console.log(`initializing nuxt pleasure`)
   const { name, root, pleasureRoot } = options
   let { config } = options
 
@@ -126,7 +142,7 @@ export default function Pleasure (options) {
   // console.log({ _config, config, options, config })
   config = merge.all([{}, _config, config, omit(options, ['config', 'name', 'root', 'pleasureRoot'])])
 
-  Object.assign(this.options.env, PleasureEnv)
+  Object.assign(this.options.env, configEnv, objToENVFormat({ pleasure: config }), PleasureEnv)
 
   // console.log({ options })
   // console.log(`nuxt>>>`, this.options)

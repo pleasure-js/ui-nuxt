@@ -16,15 +16,32 @@ var fs = _interopDefault(require('fs'));
 var omit = _interopDefault(require('lodash/omit'));
 var pleasureApi = require('pleasure-api');
 
+const { pluginsConfig: { jwt: { authEndpoint, revokeEndpoint } } } = pleasureApi.getPlugins();
+
 const dot = new Dot('-');
 
 // const plsConfig = getConfig()
-console.log(`api`, pleasureApi.getConfig());
-const config = mapKeys(dot.dot({
-  pleasure: pleasureApi.getConfig()
-}), (v, k) => kebabCase(k).replace(/-/g, '_').toUpperCase());
+const objToENVFormat = obj => {
+  return mapKeys(dot.dot(obj), (v, k) => kebabCase(k).replace(/-/g, '_').toUpperCase())
+};
 
-console.log(`nuxt pleasure config`, config);
+const { entitiesUri, prefix, port, timeout } = pleasureApi.getConfig();
+const configEnv = objToENVFormat({
+  pleasure: {
+    client: {
+      // todo: check if by ip is a better approach
+      appURL: process.env.PLEASURE_APP_URL || `http://localhost:${ port }`,
+      appServerURL: process.env.PLEASURE_APP_SERVER_URL || `http://app:${ port }`,
+      prefix,
+      entitiesUri,
+      authEndpoint,
+      revokeEndpoint,
+      timeout
+    }
+  }
+});
+
+console.log(`configEnv>>>`, configEnv);
 
 const PleasureEnv = {
   $pleasure: true,
@@ -121,7 +138,6 @@ const _config = {
  * @param {NuxtPleasureConfig} options
  */
 function Pleasure (options) {
-  console.log(`initializing nuxt pleasure`);
   const { name, root, pleasureRoot } = options;
   let { config } = options;
 
@@ -132,7 +148,7 @@ function Pleasure (options) {
   // console.log({ _config, config, options, config })
   config = merge.all([{}, _config, config, omit(options, ['config', 'name', 'root', 'pleasureRoot'])]);
 
-  Object.assign(this.options.env, PleasureEnv);
+  Object.assign(this.options.env, configEnv, objToENVFormat({ pleasure: config }), PleasureEnv);
 
   // console.log({ options })
   // console.log(`nuxt>>>`, this.options)
