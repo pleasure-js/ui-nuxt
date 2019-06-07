@@ -24,8 +24,8 @@ const configEnv = objToENVFormat({
   pleasure: {
     client: {
       // todo: check if by ip is a better approach
-      appURL: process.env.PLEASURE_APP_URL || `http://localhost:${ port }`,
-      appServerURL: process.env.PLEASURE_APP_SERVER_URL || `http://app:${ port }`,
+      appURL: process.env.PLEASURE_CLIENT_APP_URL || `http://localhost:${ port }`,
+      appServerURL: process.env.PLEASURE_CLIENT_APP_SERVER_URL || `http://app:${ port }`,
       prefix,
       entitiesUri,
       authEndpoint,
@@ -144,7 +144,7 @@ function Pleasure (options) {
 
   Object.assign(this.options.env, configEnv, objToENVFormat({ pleasure: config }), PleasureEnv);
 
-  // console.log({ options })
+  console.log(`env>>>`, this.options.env);
   // console.log(`nuxt>>>`, this.options)
   this.options.modulesDir.push(...require.main.paths.filter(p => {
     return this.options.modulesDir.indexOf(p) < 0
