@@ -1,0 +1,648 @@
+/*
+Element UI customization for Pleasure
+ */
+
+.pleasure select {
+    padding: 0 5px;
+  }
+
+.pleasure .el-form-item__label {
+    color: #666;
+  }
+
+.pleasure .el-input__icon {
+    color: #e23533;
+  }
+
+.pleasure *:-webkit-autofill::selection {
+      background: #e23533 !important;
+      color: #e7e7e7 !important;
+    }
+
+.pleasure *:-webkit-autofill:hover::selection {
+      background: #e23533 !important;
+      color: #e7e7e7 !important;
+    }
+
+.pleasure *:-webkit-autofill:focus::selection {
+      background: #e23533 !important;
+      color: #e7e7e7 !important;
+    }
+
+.pleasure *:-webkit-autofill:active::selection {
+      background: #e23533 !important;
+      color: #e7e7e7 !important;
+    }
+
+.pleasure input {
+    caret-color: #e23533;
+    background: #242424;
+    color: #e7e7e7;
+    border: none;
+  }
+
+.pleasure .el-input__inner {
+    caret-color: #e23533;
+    background: #242424;
+    color: #e7e7e7;
+    border: none;
+  }
+
+.pleasure select {
+    caret-color: #e23533;
+    background: #242424;
+    color: #e7e7e7;
+    border: none;
+  }
+
+.pleasure .el-textarea__inner {
+    caret-color: #e23533;
+    background: #242424;
+    color: #e7e7e7;
+    border: none;
+  }
+
+.pleasure input::-webkit-input-placeholder {
+      color: #434344;
+    }
+
+.pleasure .el-input__inner::-webkit-input-placeholder {
+      color: #434344;
+    }
+
+.pleasure select::-webkit-input-placeholder {
+      color: #434344;
+    }
+
+.pleasure .el-textarea__inner::-webkit-input-placeholder {
+      color: #434344;
+    }
+
+.pleasure input::-moz-placeholder {
+      color: #434344;
+    }
+
+.pleasure .el-input__inner::-moz-placeholder {
+      color: #434344;
+    }
+
+.pleasure select::-moz-placeholder {
+      color: #434344;
+    }
+
+.pleasure .el-textarea__inner::-moz-placeholder {
+      color: #434344;
+    }
+
+.pleasure input:-ms-input-placeholder {
+      color: #434344;
+    }
+
+.pleasure .el-input__inner:-ms-input-placeholder {
+      color: #434344;
+    }
+
+.pleasure select:-ms-input-placeholder {
+      color: #434344;
+    }
+
+.pleasure .el-textarea__inner:-ms-input-placeholder {
+      color: #434344;
+    }
+
+.pleasure input::-ms-input-placeholder {
+      color: #434344;
+    }
+
+.pleasure .el-input__inner::-ms-input-placeholder {
+      color: #434344;
+    }
+
+.pleasure select::-ms-input-placeholder {
+      color: #434344;
+    }
+
+.pleasure .el-textarea__inner::-ms-input-placeholder {
+      color: #434344;
+    }
+
+.pleasure input::placeholder {
+      color: #434344;
+    }
+
+.pleasure .el-input__inner::placeholder {
+      color: #434344;
+    }
+
+.pleasure select::placeholder {
+      color: #434344;
+    }
+
+.pleasure .el-textarea__inner::placeholder {
+      color: #434344;
+    }
+
+.pleasure input:hover {
+      background: rgb(34, 34, 34);
+      color: #e7e7e7;
+    }
+
+.pleasure .el-input__inner:hover {
+      background: rgb(34, 34, 34);
+      color: #e7e7e7;
+    }
+
+.pleasure select:hover {
+      background: rgb(34, 34, 34);
+      color: #e7e7e7;
+    }
+
+.pleasure .el-textarea__inner:hover {
+      background: rgb(34, 34, 34);
+      color: #e7e7e7;
+    }
+
+.pleasure input:focus {
+      background: rgb(32, 32, 32);
+      color: #e7e7e7;
+    }
+
+.pleasure input.el-input__inner--focus {
+      background: rgb(32, 32, 32);
+      color: #e7e7e7;
+    }
+
+.pleasure .el-input__inner:focus {
+      background: rgb(32, 32, 32);
+      color: #e7e7e7;
+    }
+
+.pleasure .el-input__inner.el-input__inner--focus {
+      background: rgb(32, 32, 32);
+      color: #e7e7e7;
+    }
+
+.pleasure select:focus {
+      background: rgb(32, 32, 32);
+      color: #e7e7e7;
+    }
+
+.pleasure select.el-input__inner--focus {
+      background: rgb(32, 32, 32);
+      color: #e7e7e7;
+    }
+
+.pleasure .el-textarea__inner:focus {
+      background: rgb(32, 32, 32);
+      color: #e7e7e7;
+    }
+
+.pleasure .el-textarea__inner.el-input__inner--focus {
+      background: rgb(32, 32, 32);
+      color: #e7e7e7;
+    }
+
+.pleasure input::-moz-selection {
+      background: #e23533 !important;
+      color: #e7e7e7 !important;
+    }
+
+.pleasure .el-input__inner::-moz-selection {
+      background: #e23533 !important;
+      color: #e7e7e7 !important;
+    }
+
+.pleasure select::-moz-selection {
+      background: #e23533 !important;
+      color: #e7e7e7 !important;
+    }
+
+.pleasure .el-textarea__inner::-moz-selection {
+      background: #e23533 !important;
+      color: #e7e7e7 !important;
+    }
+
+.pleasure input::selection {
+      background: #e23533 !important;
+      color: #e7e7e7 !important;
+    }
+
+.pleasure .el-input__inner::selection {
+      background: #e23533 !important;
+      color: #e7e7e7 !important;
+    }
+
+.pleasure select::selection {
+      background: #e23533 !important;
+      color: #e7e7e7 !important;
+    }
+
+.pleasure .el-textarea__inner::selection {
+      background: #e23533 !important;
+      color: #e7e7e7 !important;
+    }
+
+.pleasure .solid input {
+      background: #ccc !important;
+      color: #242424 !important;
+    }
+
+.pleasure .solid .el-input__inner {
+      background: #ccc !important;
+      color: #242424 !important;
+    }
+
+.pleasure .solid select {
+      background: #ccc !important;
+      color: #242424 !important;
+    }
+
+.pleasure .solid .el-textarea__inner {
+      background: #ccc !important;
+      color: #242424 !important;
+    }
+
+.pleasure .solid input::-webkit-input-placeholder {
+        color: #242424
+      }
+
+.pleasure .solid .el-input__inner::-webkit-input-placeholder {
+        color: #242424
+      }
+
+.pleasure .solid select::-webkit-input-placeholder {
+        color: #242424
+      }
+
+.pleasure .solid .el-textarea__inner::-webkit-input-placeholder {
+        color: #242424
+      }
+
+.pleasure .solid input::-moz-placeholder {
+        color: #242424
+      }
+
+.pleasure .solid .el-input__inner::-moz-placeholder {
+        color: #242424
+      }
+
+.pleasure .solid select::-moz-placeholder {
+        color: #242424
+      }
+
+.pleasure .solid .el-textarea__inner::-moz-placeholder {
+        color: #242424
+      }
+
+.pleasure .solid input:-ms-input-placeholder {
+        color: #242424
+      }
+
+.pleasure .solid .el-input__inner:-ms-input-placeholder {
+        color: #242424
+      }
+
+.pleasure .solid select:-ms-input-placeholder {
+        color: #242424
+      }
+
+.pleasure .solid .el-textarea__inner:-ms-input-placeholder {
+        color: #242424
+      }
+
+.pleasure .solid input::-ms-input-placeholder {
+        color: #242424
+      }
+
+.pleasure .solid .el-input__inner::-ms-input-placeholder {
+        color: #242424
+      }
+
+.pleasure .solid select::-ms-input-placeholder {
+        color: #242424
+      }
+
+.pleasure .solid .el-textarea__inner::-ms-input-placeholder {
+        color: #242424
+      }
+
+.pleasure .solid input::placeholder {
+        color: #242424
+      }
+
+.pleasure .solid .el-input__inner::placeholder {
+        color: #242424
+      }
+
+.pleasure .solid select::placeholder {
+        color: #242424
+      }
+
+.pleasure .solid .el-textarea__inner::placeholder {
+        color: #242424
+      }
+
+.pleasure .el-input:not(.force-input) input[readonly], .pleasure .el-input:not(.force-input) .el-input__inner[readonly], .pleasure .el-input:not(.force-input) select[readonly], .pleasure .el-input:not(.force-input) .el-textarea__inner[readonly], .pleasure .el-input:not(.force-input) textarea[readonly], .pleasure .el-textarea:not(.force-input) input[readonly], .pleasure .el-textarea:not(.force-input) .el-input__inner[readonly], .pleasure .el-textarea:not(.force-input) select[readonly], .pleasure .el-textarea:not(.force-input) .el-textarea__inner[readonly], .pleasure .el-textarea:not(.force-input) textarea[readonly] {
+        pointer-events: none;
+        background-color: transparent !important;
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+.pleasure .el-input:not(.force-input) textarea, .pleasure .el-textarea:not(.force-input) textarea {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
+.pleasure .el-input:not(.force-input) textarea[readonly], .pleasure .el-textarea:not(.force-input) textarea[readonly] {
+        pointer-events: none;
+        resize: none;
+      }
+
+/*
+      .el-form-item__label {
+        color: var(--pleasure-input-color-label-focus);
+      }
+      */
+
+.pleasure .el-form-item.focus .el-input__icon {
+        color: #e23533;
+      }
+
+/*
+      .el-form-item__label {
+        color: var(--pleasure-input-label-color-over);
+      }
+      */
+
+.pleasure .el-form-item.over .el-input__icon {
+        color: #e23533;
+      }
+
+.pleasure.multiple-lines .el-form-item__label {
+      float: none !important;
+    }
+
+.pleasure.multiple-lines .el-input input[readonly] {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+.pleasure .el-date-editor.el-input, .pleasure .el-date-editor.el-input__inner {
+    width: 100%;
+  }
+
+.pleasure input {
+    border-color: transparent !important;
+  }
+
+.el-dropdown-menu__item:not(.is-disabled) {
+  background: transparent;
+  color: #e7e7e7;
+}
+
+.el-dropdown-menu__item {
+  background: transparent;
+  color: #e7e7e7;
+}
+
+.el-dropdown-menu__item:not(.is-disabled):hover {
+    background: #141414;
+    color: #e7e7e7;
+  }
+
+.el-dropdown-menu__item:not(.is-disabled):focus {
+    background: #141414;
+    color: #e7e7e7;
+  }
+
+.el-dropdown-menu__item:hover {
+    background: #141414;
+    color: #e7e7e7;
+  }
+
+.el-dropdown-menu__item:focus {
+    background: #141414;
+    color: #e7e7e7;
+  }
+
+.el-popper {
+  border: none;
+  background: #e23533;
+}
+
+.el-popper[x-placement^="bottom"] .popper__arrow {
+      border-bottom: none !important;
+    }
+
+.el-popper[x-placement^="bottom"] .popper__arrow:after {
+        border-bottom-color: #e23533 !important;
+      }
+
+.el-popper[x-placement^="top"] .popper__arrow {
+      border-top: none !important;
+    }
+
+.el-popper[x-placement^="top"] .popper__arrow:after {
+        border-top-color: #e23533 !important;
+      }
+
+.el-popper[x-placement^="left"] .popper__arrow {
+      border-left: none !important;
+    }
+
+.el-popper[x-placement^="left"] .popper__arrow:after {
+        border-left-color: #e23533 !important;
+      }
+
+.el-popper[x-placement^="right"] .popper__arrow {
+      border-right: none !important;
+    }
+
+.el-popper[x-placement^="right"] .popper__arrow:after {
+        border-right-color: #e23533 !important;
+      }
+
+.el-popper .el-popper.el-date-picker {
+    border: none;
+    background: #242424;
+  }
+
+/*
+  .el-tabs__nav {
+    margin: 0 auto;
+    position: relative;
+    float: none;
+
+    .el-tabs__item {
+      color: map-get($color, gray);
+    }
+  }
+  */
+
+.el-popper [v-cloak] {
+    display: none;
+  }
+
+/*
+  .gray-pale {
+    color: map-get($color, gray-pale)
+  }
+
+  .gray {
+    color: map-get($color, gray)
+  }
+
+  .gray-light {
+    color: map-get($color, gray-light)
+  }
+  */
+
+.el-popper .light {
+    font-weight: 300;
+  }
+
+.el-popper .full-btn {
+    display: block;
+    position: relative;
+    width: 100%;
+  }
+
+.el-popper .full-btn + .full-btn {
+    margin: 1em 0 0 0;
+  }
+
+.el-popper .el-button {
+    border: none !important;
+  }
+
+.el-popper .el-button.el-button--default {
+      background: #434344;
+      color: #999;
+    }
+
+.el-popper .el-button.el-button--default:hover {
+        background: rgb(76, 76, 77);
+        color: #999;
+      }
+
+.el-popper .el-button.el-button--default:focus {
+        background: rgb(76, 76, 77);
+        color: #999;
+      }
+
+.el-popper .el-button.el-button--primary {
+      background: #e23533;
+      color: #242424;
+    }
+
+.el-popper .el-button.el-button--primary:hover {
+        background: rgb(229, 73, 71);
+        color: #242424;
+      }
+
+.el-popper .el-button.el-button--primary:focus {
+        background: rgb(229, 73, 71);
+        color: #242424;
+      }
+
+.el-popper .el-message-box {
+    border: none;
+    background: #242424;
+  }
+
+.el-popper .el-message-box .el-button.el-button--default {
+      background: #434344;
+      color: #999;
+    }
+
+.el-popper .el-message-box .el-message-box__header {
+      background: transparent;
+    }
+
+.el-popper .el-message-box .el-message-box__header .el-message-box__title {
+        color: #999;
+      }
+
+.el-popper .el-message-box .el-button.el-button--primary {
+        background: #e23533;
+        color: #e23533;
+      }
+
+.el-popper .el-button[disabled] {
+      background: #999 !important;
+      color: #666 !important;
+    }
+
+.el-popper .el-icon-close {
+    color: #e23533 !important;
+  }
+
+.el-popper .add-btn {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    font-size: 1em;
+    padding: 12px;
+    box-shadow: undefined;
+    z-index: 1000;
+    background: undefined !important;
+    color: undefined !important;
+    border: none;
+    transition: transform .3s 0s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+.el-popper .delete-btn {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    font-size: 1em;
+    padding: 12px;
+    box-shadow: undefined;
+    z-index: 1000;
+    background: undefined !important;
+    color: undefined !important;
+    border: none;
+    transition: transform .3s 0s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+.el-popper .add-btn:hover, .el-popper .delete-btn:hover {
+      transform: scale(1.2)
+    }
+
+.el-popper .add-btn.abs, .el-popper .delete-btn.abs {
+      position: absolute;
+    }
+
+html.client-app .el-popper .add-btn, html.client-app .el-popper .delete-btn {
+      bottom: calc(30px + constant(safe-area-inset-bottom) + constant(safe-area-inset-top));
+      bottom: calc(30px + env(safe-area-inset-bottom) + env(safe-area-inset-top));
+    }
+
+.el-popper .delete-btn {
+    left: 80px;
+    background: undefined;
+    color: undefined;
+  }
+
+.el-popper .el-notification {
+    margin-top: 64px;
+    border: none;
+    background: #242424;
+  }
+
+.el-popper .el-notification .el-notification__title {
+      color: undefined;
+    }
+
+.el-popper .el-table__empty-text {
+    margin-top: undefined;
+  }
+
+.el-popper .el-form {
+    width: 100%;
+  }
+
+.el-popper .el-form-item__content .el-input__prefix {
+      max-height: 40px;
+    }
