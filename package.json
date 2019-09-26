@@ -32,15 +32,19 @@
     "vue-template-compiler": "^2.6.10"
   },
   "dependencies": {
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "chokidar": "^3.0.2",
+    "css-loader": "^3.2.0",
     "deepmerge": "^3.2.0",
     "dot-object": "^1.7.1",
     "element-ui": "2.7.2",
     "font-awesome": "^4.7.0",
+    "fs-extra": "^8.1.0",
     "lodash": "^4.17.11",
-    "pleasure-api": "keepwondering/pleasure-api",
+    "pleasure-api": "keepwondering/pleasure-api#v1-beta",
     "pleasure-api-client": "keepwondering/pleasure-api-client#v1-beta",
     "pleasure-ui-vue": "keepwondering/pleasure-ui-vue#v1-beta",
-    "pleasure-utils": "keepwondering/pleasure-utils",
+    "pleasure-utils": "keepwondering/pleasure-utils#v1-beta",
     "postcss-calc": "^7.0.1",
     "postcss-color-function": "^4.1.0",
     "postcss-css-variables": "^0.12.0",
@@ -51,7 +55,8 @@
     "postcss-preset-env": "^6.6.0",
     "postcss-responsive-type": "^1.0.0",
     "postcss-simple-vars": "^5.0.2",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vue-i18n": "^8.14.0"
   },
   "peerDependencies": {
     "pleasure": "keepwondering/pleasure"
