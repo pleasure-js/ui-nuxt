@@ -126,7 +126,8 @@ const UiLibrarySetup = {
     setup: path.join(__dirname, `../lib/setup-element-ui.js`),
     css: [
       nodeModule(`element-ui/lib/theme-chalk/display.css`),
-      nodeModule(`element-ui/packages/theme-chalk/lib/index.css`)
+      nodeModule(`pleasure-ui-nuxt/dist/element-ui-fa-icons.pcss`),
+      /*nodeModule(`element-ui/packages/theme-chalk/lib/index.css`)*/
     ]
   },
   name: 'vuetify',
@@ -197,6 +198,8 @@ function refreshCss (input, output) {
   parsePostCss(input, output, { variables });
 }
 
+// console.log(`_getConfig()`, _getConfig())
+
 /**
  * Module pleasure-ui-nuxt
  * @param {NuxtPleasureConfig} options
@@ -206,9 +209,11 @@ function Pleasure (options) {
   let { config } = options;
 
   // console.log({ _config, config, options, config })
-  config = merge.all([{}, _config, config, omit(options, ['config', 'name', 'root', 'pleasureRoot'])]);
+  config = merge.all([_config, config, omit(options, ['config', 'name', 'root', 'pleasureRoot'])]);
+  const objEnvFormat = objToENVFormat({ pleasure: pleasureUtils.getConfig() });
+  // console.log({ 'this.options.env': this.options.env, configEnv, objEnvFormat, PleasureEnv })
 
-  merge.all([this.options.env, configEnv, objToENVFormat({ pleasure: config }), PleasureEnv]);
+  Object.assign(this.options.env, merge.all([configEnv, objEnvFormat, PleasureEnv]));
 
   // middleware for users auth
 
@@ -225,9 +230,12 @@ function Pleasure (options) {
 
   const middlewarePath = path.join(this.options.srcDir, 'middleware');
   fsExtra.mkdirpSync(middlewarePath);
-  fs.copyFileSync(require.resolve('pleasure-ui-vue/src/lib/middleware-load-session.js'), path.join(middlewarePath, 'pleasure-middleware-load-session.js'));
   this.options.router.middleware.push('pleasure-middleware-load-session');
   // this.options.router.middleware.push(require('pleasure-ui-vue/src/lib/middleware-load-session.js'))
+
+  this.nuxt.hook('build:compile', (payload) => {
+    // console.log(`building from pleasure-nuxt`, payload)
+  });
 
   const writeCss = () => {
     const baseCss = require.resolve('pleasure-ui-vue/dist/pleasure-ui-vue.pcss');
@@ -284,7 +292,7 @@ function Pleasure (options) {
     PleasureEnv[`$pleasure.${ name }`] = value;
   });
 
-  console.log(`env>>>`, this.options.env);
+  // console.log(`env>>>`, this.options.env)
   // console.log(`nuxt>>>`, this.options)
   this.options.modulesDir.push(...require.main.paths.filter(p => {
     return this.options.modulesDir.indexOf(p) < 0
@@ -294,6 +302,7 @@ function Pleasure (options) {
   this.addPlugin(resolve(`lib/pleasure-ui-nuxt-plugin.js`));
 
   if (config.i18n) {
+    console.log(`adding i18n`);
     this.addPlugin(resolve(`lib/nuxt-i18n-plugin.js`));
     const localesPath = path.resolve(this.options.srcDir, config.localesPath);
     const locales = {};
@@ -351,7 +360,7 @@ function Pleasure (options) {
 
   // important
   const addTranspile = ['pleasure', 'pleasure-ui-nuxt', 'pleasure-ui-vue', 'pleasure-api-client'];
-  const transpile = addTranspile.filter(v => v !== 'pleasure-ui-nuxt' && v !== 'pleasure');
+  const transpile = addTranspile.filter(v => /*v !== 'pleasure-ui-nuxt' &&*/ v !== 'pleasure');
 
   const findPkg = (pkgName, ...paths) => {
     return path.resolve(path.dirname(require.resolve(pkgName)), '../', ...paths)
@@ -381,7 +390,7 @@ function Pleasure (options) {
     console.log(`adding suite node_modules`, { suiteNodeModules });
     this.options.modulesDir.unshift(suiteNodeModules);
   } else {
-    console.log({ suiteNodeModules, suitePath }, fs.existsSync(suitePath), fs.existsSync(suiteNodeModules));
+    // console.log({ suiteNodeModules, suitePath }, fs.existsSync(suitePath), fs.existsSync(suiteNodeModules));
   }
 
   // this.options.modulesDir.push(path.join(require.resolve('pleasure-ui-vue'), 'node_modules'))
