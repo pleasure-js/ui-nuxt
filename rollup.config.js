@@ -1,5 +1,5 @@
 const commonjs = require('rollup-plugin-commonjs')
-const vue = require('rollup-plugin-vue')
+// const vue = require('rollup-plugin-vue')
 
 module.exports = {
   input: 'src/pleasure-ui-nuxt.js',
@@ -15,6 +15,6 @@ module.exports = {
   ],
   plugins: [
     commonjs(),
-    vue()
+    // vue()
   ]
 }
