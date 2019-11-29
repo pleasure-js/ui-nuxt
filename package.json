@@ -49,6 +49,8 @@
     "postcss-calc": "^7.0.1",
     "postcss-color-function": "^4.1.0",
     "postcss-css-variables": "^0.13.0",
+    "postcss-easings": "^2.0.0",
+    "postcss-extend": "^1.0.5",
     "postcss-hexrgba": "^2.0.0",
     "postcss-inline-variables": "^1.0.1",
     "postcss-loader": "^3.0.0",
