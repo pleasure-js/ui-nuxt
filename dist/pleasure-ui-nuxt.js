@@ -256,10 +256,8 @@ function Pleasure (options) {
       persistent: true
     });
     watcher.on('change', () => {
-      console.log(`refreshing css`);
       writeCss();
       if (UiLibrarySetup[config.uiLibrary].name === 'element-ui') {
-        console.log(`refreshing element ui`);
         writeElementUi();
       }
     });
@@ -302,7 +300,6 @@ function Pleasure (options) {
   this.addPlugin(resolve(`lib/pleasure-ui-nuxt-plugin.js`));
 
   if (config.i18n) {
-    console.log(`adding i18n`);
     this.addPlugin(resolve(`lib/nuxt-i18n-plugin.js`));
     const localesPath = path.resolve(this.options.srcDir, config.localesPath);
     const locales = {};
@@ -387,10 +384,7 @@ function Pleasure (options) {
   const suitePath = path.join(__dirname, '../../../packages');
 
   if (fs.existsSync(suitePath) && fs.existsSync(suiteNodeModules)) {
-    console.log(`adding suite node_modules`, { suiteNodeModules });
     this.options.modulesDir.unshift(suiteNodeModules);
-  } else {
-    // console.log({ suiteNodeModules, suitePath }, fs.existsSync(suitePath), fs.existsSync(suiteNodeModules));
   }
 
   // this.options.modulesDir.push(path.join(require.resolve('pleasure-ui-vue'), 'node_modules'))
