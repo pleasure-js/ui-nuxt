@@ -317,9 +317,11 @@ export default function Pleasure (options) {
   this.options.build.babel.include.push(...transpile)
   this.options.build.babel.include.push(findRoot())
 
+/*
   this.options.modulesDir.unshift(...transpile.map(p => {
     return findNodeModules(p)
   }))
+*/
 
   this.options.modulesDir.unshift(path.join(__dirname, '../node_modules'))
 

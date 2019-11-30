@@ -353,14 +353,6 @@ function Pleasure (options) {
   const addTranspile = ['pleasure', 'pleasure-ui-nuxt', 'pleasure-ui-vue', 'pleasure-api-client'];
   const transpile = addTranspile.filter(v => /*v !== 'pleasure-ui-nuxt' &&*/ v !== 'pleasure');
 
-  const findPkg = (pkgName, ...paths) => {
-    return path.resolve(path.dirname(require.resolve(pkgName)), '../', ...paths)
-  };
-
-  const findNodeModules = pkgName => {
-    return findPkg(pkgName, 'node_modules')
-  };
-
   this.options.build.transpile.push(/pleasure/);
   if (!this.options.build.babel.include) {
     this.options.build.babel.include = [];
@@ -368,9 +360,11 @@ function Pleasure (options) {
   this.options.build.babel.include.push(...transpile);
   this.options.build.babel.include.push(findRoot());
 
+/*
   this.options.modulesDir.unshift(...transpile.map(p => {
     return findNodeModules(p)
-  }));
+  }))
+*/
 
   this.options.modulesDir.unshift(path.join(__dirname, '../node_modules'));
 
