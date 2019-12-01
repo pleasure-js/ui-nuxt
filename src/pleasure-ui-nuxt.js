@@ -235,11 +235,9 @@ export default function Pleasure (options) {
 
   // console.log(`env>>>`, this.options.env)
   // console.log(`nuxt>>>`, this.options)
-  /*
     this.options.modulesDir.push(...require.main.paths.filter(p => {
       return this.options.modulesDir.indexOf(p) < 0
     }))
-  */
 
   const pleasurePlugin = resolve(`lib/nuxt-element-ui-pleasure-plugin.js`)
   this.addPlugin(pleasurePlugin)
@@ -313,13 +311,12 @@ export default function Pleasure (options) {
     return findPkg(pkgName, 'node_modules')
   }
 
-  // this.options.build.transpile.push(...transpile)
-
+  this.options.build.transpile.push(/pleasure/)
   if (!this.options.build.babel.include) {
     this.options.build.babel.include = []
   }
   this.options.build.babel.include.push(...transpile)
-  // this.options.build.babel.include.push(findRoot())
+  this.options.build.babel.include.push(findRoot())
 
   /*
     this.options.modulesDir.unshift(...transpile.map(p => {

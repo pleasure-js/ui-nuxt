@@ -292,11 +292,9 @@ function Pleasure (options) {
 
   // console.log(`env>>>`, this.options.env)
   // console.log(`nuxt>>>`, this.options)
-  /*
     this.options.modulesDir.push(...require.main.paths.filter(p => {
       return this.options.modulesDir.indexOf(p) < 0
-    }))
-  */
+    }));
 
   const pleasurePlugin = resolve(`lib/nuxt-element-ui-pleasure-plugin.js`);
   this.addPlugin(pleasurePlugin);
@@ -362,13 +360,12 @@ function Pleasure (options) {
   const addTranspile = ['pleasure', 'pleasure-ui-nuxt', 'pleasure-ui-vue', 'pleasure-api-client', pleasurePlugin];
   const transpile = addTranspile.filter(v => /*v !== 'pleasure-ui-nuxt' &&*/ v !== 'pleasure');
 
-  // this.options.build.transpile.push(...transpile)
-
+  this.options.build.transpile.push(/pleasure/);
   if (!this.options.build.babel.include) {
     this.options.build.babel.include = [];
   }
   this.options.build.babel.include.push(...transpile);
-  // this.options.build.babel.include.push(findRoot())
+  this.options.build.babel.include.push(pleasureUtils.findRoot());
 
   /*
     this.options.modulesDir.unshift(...transpile.map(p => {
