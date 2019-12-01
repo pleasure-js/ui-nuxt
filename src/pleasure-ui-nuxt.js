@@ -326,7 +326,7 @@ export default function Pleasure (options) {
     }))
   */
 
-  this.options.modulesDir.unshift(path.join(__dirname, '../node_modules'))
+  // this.options.modulesDir.unshift(path.join(__dirname, '../node_modules'))
 
   const suiteNodeModules = path.join(__dirname, '../../../node_modules')
   const suitePath = path.join(__dirname, '../../../packages')
@@ -349,6 +349,8 @@ export default function Pleasure (options) {
     Object.assign(config.resolve.alias, {
       pleasure: pleasureRoot
     })
+
+    fs.writeFileSync(path.join(process.cwd(), 'final.config.json'), JSON.stringify(this.options, null, 2))
   })
 
   this.extendRoutes((routes, resolve) => {
@@ -398,8 +400,6 @@ export default function Pleasure (options) {
         })
     */
   })
-
-  fs.writeFileSync(path.join(process.cwd(), 'final.config.json'), JSON.stringify(this.options, null, 2))
 }
 
 // REQUIRED if publishing the module as npm package
