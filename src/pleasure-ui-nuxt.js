@@ -313,7 +313,8 @@ export default function Pleasure (options) {
     return findPkg(pkgName, 'node_modules')
   }
 
-  this.options.build.transpile.push(...transpile)
+  // this.options.build.transpile.push(...transpile)
+
   if (!this.options.build.babel.include) {
     this.options.build.babel.include = []
   }

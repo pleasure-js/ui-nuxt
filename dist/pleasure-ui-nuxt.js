@@ -362,7 +362,8 @@ function Pleasure (options) {
   const addTranspile = ['pleasure', 'pleasure-ui-nuxt', 'pleasure-ui-vue', 'pleasure-api-client', pleasurePlugin];
   const transpile = addTranspile.filter(v => /*v !== 'pleasure-ui-nuxt' &&*/ v !== 'pleasure');
 
-  this.options.build.transpile.push(...transpile);
+  // this.options.build.transpile.push(...transpile)
+
   if (!this.options.build.babel.include) {
     this.options.build.babel.include = [];
   }
