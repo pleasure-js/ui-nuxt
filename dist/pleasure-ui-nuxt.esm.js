@@ -360,7 +360,7 @@ function Pleasure (options) {
   if (!this.options.build.babel.include) {
     this.options.build.babel.include = [];
   }
-  // this.options.build.babel.include.push(...transpile)
+  this.options.build.babel.include.push(...transpile);
   this.options.build.babel.include.push(findRoot());
 
   /*
