@@ -367,7 +367,7 @@ function Pleasure (options) {
     this.options.build.babel.include = [];
   }
   this.options.build.babel.include.push(...transpile);
-  this.options.build.babel.include.push(pleasureUtils.findRoot());
+  // this.options.build.babel.include.push(findRoot())
 
   /*
     this.options.modulesDir.unshift(...transpile.map(p => {
