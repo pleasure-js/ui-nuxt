@@ -14,8 +14,8 @@ var dot$1 = _interopDefault(require('dot-object'));
 var mapKeys = _interopDefault(require('lodash/mapKeys'));
 var fs = _interopDefault(require('fs'));
 var omit = _interopDefault(require('lodash/omit'));
-var pleasureApi = require('pleasure-api');
-var pleasureUtils = require('pleasure-utils');
+var api = require('@pleasure-js/api');
+var utils = require('@pleasure-js/utils');
 var postcss = _interopDefault(require('postcss'));
 var postCssVariables = _interopDefault(require('postcss-css-variables'));
 var postCssExtend = _interopDefault(require('postcss-extend'));
@@ -33,7 +33,7 @@ function parsePostCss (src, dest, { variables = {} } = {}) {
     throw new Error(`both src and dest are required`)
   }
 
-  const defaultVariables = require('pleasure-ui-vue/postcss.variables.js');
+  const defaultVariables = require('@pleasure-js/ui-vue/postcss.variables.js');
 
   variables = mapKeys(dot$1.dot(merge.all([{}, defaultVariables, variables])), (v, k) => kebabCase(k).replace(/-default$/, ''));
 
@@ -73,7 +73,7 @@ function parsePostCss (src, dest, { variables = {} } = {}) {
   }
 }
 
-const { pluginsConfig: { jwt: { authEndpoint, revokeEndpoint } } } = pleasureApi.getPlugins();
+const { pluginsConfig: { jwt: { authEndpoint, revokeEndpoint } } } = api.getPlugins();
 
 const dot = new dot$1('-');
 
@@ -82,7 +82,7 @@ const objToENVFormat = obj => {
   return mapKeys(dot.dot(obj), (v, k) => kebabCase(k).replace(/-/g, '_').toUpperCase())
 };
 
-const { entitiesUri, prefix, port, timeout } = pleasureApi.getConfig();
+const { entitiesUri, prefix, port, timeout } = api.getConfig();
 const configEnv = objToENVFormat({
   pleasure: {
     client: {
@@ -126,7 +126,7 @@ const UiLibrarySetup = {
     setup: path.join(__dirname, `../lib/setup-element-ui.js`),
     css: [
       nodeModule(`element-ui/lib/theme-chalk/display.css`),
-      nodeModule(`pleasure-ui-nuxt/dist/element-ui-fa-icons.pcss`),
+      nodeModule(`@pleasure-js/ui-nuxt/dist/element-ui-fa-icons.pcss`),
       /*nodeModule(`element-ui/packages/theme-chalk/lib/index.css`)*/
     ]
   },
@@ -194,7 +194,7 @@ const _config = {
 };
 
 function refreshCss (input, output) {
-  const { postCssVariables: variables } = pleasureUtils.getConfig('ui', null, true);
+  const { postCssVariables: variables } = utils.getConfig('ui', null, true);
   parsePostCss(input, output, { variables });
 }
 
@@ -210,7 +210,7 @@ function Pleasure (options) {
 
   // console.log({ _config, config, options, config })
   config = merge.all([_config, config, omit(options, ['config', 'name', 'root', 'pleasureRoot'])]);
-  const objEnvFormat = objToENVFormat({ pleasure: pleasureUtils.getConfig() });
+  const objEnvFormat = objToENVFormat({ pleasure: utils.getConfig() });
   // console.log({ 'this.options.env': this.options.env, configEnv, objEnvFormat, PleasureEnv })
 
   Object.assign(this.options.env, merge.all([configEnv, objEnvFormat, PleasureEnv]));
@@ -222,7 +222,7 @@ function Pleasure (options) {
       this.options.router.middleware = []
     }
   */
-  const loadSession = require.resolve('pleasure-ui-vue/src/lib/server-middleware-load-session.js');
+  const loadSession = require.resolve('@pleasure-js/ui-vue/src/lib/server-middleware-load-session.js');
   // console.log({ loadSession })
   this.addServerMiddleware(loadSession);
 
@@ -231,20 +231,20 @@ function Pleasure (options) {
   const middlewarePath = path.join(this.options.srcDir, 'middleware');
   fsExtra.mkdirpSync(middlewarePath);
   this.options.router.middleware.push('pleasure-middleware-load-session');
-  // this.options.router.middleware.push(require('pleasure-ui-vue/src/lib/middleware-load-session.js'))
+  // this.options.router.middleware.push(require('@pleasure-js/ui-vue/src/lib/middleware-load-session.js'))
 
   this.nuxt.hook('build:compile', (payload) => {
     // console.log(`building from pleasure-nuxt`, payload)
   });
 
   const writeCss = () => {
-    const baseCss = require.resolve('pleasure-ui-vue/dist/pleasure-ui-vue.pcss');
-    const pleasureCss = require.resolve('pleasure-ui-vue/src/pleasure.pcss');
+    const baseCss = require.resolve('@pleasure-js/ui-vue/dist/pleasure-ui-vue.pcss');
+    const pleasureCss = require.resolve('@pleasure-js/ui-vue/src/pleasure.pcss');
     refreshCss([baseCss, pleasureCss], localPleasureCss);
   };
 
   const writeElementUi = () => {
-    refreshCss([require.resolve('pleasure-ui-vue/src/element-ui/element-ui.pcss'), require.resolve('pleasure-ui-vue/dist/pleasure-ui-vue-element.pcss')], localElementUi);
+    refreshCss([require.resolve('@pleasure-js/ui-vue/src/element-ui/element-ui.pcss'), require.resolve('@pleasure-js/ui-vue/dist/pleasure-ui-vue-element.pcss')], localElementUi);
   };
 
   /*
@@ -252,7 +252,7 @@ function Pleasure (options) {
     - when postCssVars change, then recompile css's
    */
   if (process.env.NODE_ENV !== 'production') {
-    const watcher = chokidar.watch(pleasureUtils.findConfig(), {
+    const watcher = chokidar.watch(utils.findConfig(), {
       persistent: true
     });
     watcher.on('change', () => {
@@ -263,9 +263,9 @@ function Pleasure (options) {
     });
   }
 
-  // const baseCss = require.resolve('pleasure-ui-vue/dist/pleasure-ui-vue.pcss')
-  const localPleasureCss = pleasureUtils.findRoot('.pleasure/pleasure.css');
-  const localElementUi = pleasureUtils.findRoot('.pleasure/element-ui.css');
+  // const baseCss = require.resolve('@pleasure-js/ui-vue/dist/pleasure-ui-vue.pcss')
+  const localPleasureCss = utils.findRoot('.pleasure/pleasure.css');
+  const localElementUi = utils.findRoot('.pleasure/element-ui.css');
 
   fsExtra.ensureFileSync(localPleasureCss);
 
@@ -346,7 +346,7 @@ function Pleasure (options) {
         }
     */
   };
-  let postCssVariables = merge.all([{}, require('pleasure-ui-vue/postcss.variables'), get(config, `postCssVariables`, {})]);
+  let postCssVariables = merge.all([{}, require('@pleasure-js/ui-vue/postcss.variables'), get(config, `postCssVariables`, {})]);
   postCssVariables = mapKeys(dot.dot(postCssVariables), (v, k) => kebabCase(k).replace(/-default$/, ''));
   // console.log({ postCssVariables })
 
@@ -357,7 +357,7 @@ function Pleasure (options) {
   this.options.build.postcss.plugins['postcss-calc'] = true;
 
   // important
-  const addTranspile = ['pleasure', 'pleasure-ui-nuxt', 'pleasure-ui-vue', 'pleasure-api-client', pleasurePlugin];
+  const addTranspile = ['@pleasure-js', '@pleasure-js/ui-nuxt', '@pleasure-js/ui-vue', '@pleasure-js/api-client', pleasurePlugin];
   const transpile = addTranspile.filter(v => /*v !== 'pleasure-ui-nuxt' &&*/ v !== 'pleasure');
 
   this.options.build.transpile.push(/pleasure/);
@@ -365,7 +365,7 @@ function Pleasure (options) {
     this.options.build.babel.include = [];
   }
   this.options.build.babel.include.push(...transpile);
-  this.options.build.babel.include.push(pleasureUtils.findRoot());
+  this.options.build.babel.include.push(utils.findRoot());
 
   /*
     this.options.modulesDir.unshift(...transpile.map(p => {
@@ -382,7 +382,7 @@ function Pleasure (options) {
     this.options.modulesDir.unshift(suiteNodeModules);
   }
 
-  // this.options.modulesDir.push(path.join(require.resolve('pleasure-ui-vue'), 'node_modules'))
+  // this.options.modulesDir.push(path.join(require.resolve('@pleasure-js/ui-vue'), 'node_modules'))
 
   // todo: add yarn global node_modules
   // console.log(this.options.modulesDir)
@@ -419,14 +419,14 @@ function Pleasure (options) {
     routes.push({
       // todo: make path configurable via pleasure.config.js
       path: '/pleasure/create/:entity',
-      component: require.resolve('pleasure-ui-vue/src/ui/pages/pleasure-create.vue')
+      component: require.resolve('@pleasure-js/ui-vue/src/ui/pages/pleasure-create.vue')
     });
 
     // update
     routes.push({
       // todo: make path configurable via pleasure.config.js
       path: '/pleasure/update/:entity/:entry',
-      component: require.resolve('pleasure-ui-vue/src/ui/pages/pleasure-update.vue')
+      component: require.resolve('@pleasure-js/ui-vue/src/ui/pages/pleasure-update.vue')
     });
 
     // list

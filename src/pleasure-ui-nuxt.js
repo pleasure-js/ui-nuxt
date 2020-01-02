@@ -8,8 +8,8 @@ import Dot from 'dot-object'
 import mapKeys from 'lodash/mapKeys'
 import fs from 'fs'
 import omit from 'lodash/omit'
-import { getConfig, getPlugins } from 'pleasure-api'
-import { findRoot, getConfig as _getConfig, findConfig } from 'pleasure-utils'
+import { getConfig, getPlugins } from '@pleasure-js/api'
+import { findRoot, getConfig as _getConfig, findConfig } from '@pleasure-js/utils'
 import { parsePostCss } from './lib/parse-postcss.js'
 import { ensureFileSync, mkdirpSync } from 'fs-extra'
 import chokidar from 'chokidar'
@@ -69,7 +69,7 @@ const UiLibrarySetup = {
     setup: path.join(__dirname, `../lib/setup-element-ui.js`),
     css: [
       nodeModule(`element-ui/lib/theme-chalk/display.css`),
-      nodeModule(`pleasure-ui-nuxt/dist/element-ui-fa-icons.pcss`),
+      nodeModule(`@pleasure-js/ui-nuxt/dist/element-ui-fa-icons.pcss`),
       /*nodeModule(`element-ui/packages/theme-chalk/lib/index.css`)*/
     ]
   },
@@ -165,7 +165,7 @@ export default function Pleasure (options) {
       this.options.router.middleware = []
     }
   */
-  const loadSession = require.resolve('pleasure-ui-vue/src/lib/server-middleware-load-session.js')
+  const loadSession = require.resolve('@pleasure-js/ui-vue/src/lib/server-middleware-load-session.js')
   // console.log({ loadSession })
   this.addServerMiddleware(loadSession)
 
@@ -174,20 +174,20 @@ export default function Pleasure (options) {
   const middlewarePath = path.join(this.options.srcDir, 'middleware')
   mkdirpSync(middlewarePath)
   this.options.router.middleware.push('pleasure-middleware-load-session')
-  // this.options.router.middleware.push(require('pleasure-ui-vue/src/lib/middleware-load-session.js'))
+  // this.options.router.middleware.push(require('@pleasure-js/ui-vue/src/lib/middleware-load-session.js'))
 
   this.nuxt.hook('build:compile', (payload) => {
     // console.log(`building from pleasure-nuxt`, payload)
   })
 
   const writeCss = () => {
-    const baseCss = require.resolve('pleasure-ui-vue/dist/pleasure-ui-vue.pcss')
-    const pleasureCss = require.resolve('pleasure-ui-vue/src/pleasure.pcss')
+    const baseCss = require.resolve('@pleasure-js/ui-vue/dist/pleasure-ui-vue.pcss')
+    const pleasureCss = require.resolve('@pleasure-js/ui-vue/src/pleasure.pcss')
     refreshCss([baseCss, pleasureCss], localPleasureCss)
   }
 
   const writeElementUi = () => {
-    refreshCss([require.resolve('pleasure-ui-vue/src/element-ui/element-ui.pcss'), require.resolve('pleasure-ui-vue/dist/pleasure-ui-vue-element.pcss')], localElementUi)
+    refreshCss([require.resolve('@pleasure-js/ui-vue/src/element-ui/element-ui.pcss'), require.resolve('@pleasure-js/ui-vue/dist/pleasure-ui-vue-element.pcss')], localElementUi)
   }
 
   /*
@@ -206,7 +206,7 @@ export default function Pleasure (options) {
     })
   }
 
-  // const baseCss = require.resolve('pleasure-ui-vue/dist/pleasure-ui-vue.pcss')
+  // const baseCss = require.resolve('@pleasure-js/ui-vue/dist/pleasure-ui-vue.pcss')
   const localPleasureCss = findRoot('.pleasure/pleasure.css')
   const localElementUi = findRoot('.pleasure/element-ui.css')
 
@@ -289,7 +289,7 @@ export default function Pleasure (options) {
         }
     */
   }
-  let postCssVariables = merge.all([{}, require('pleasure-ui-vue/postcss.variables'), get(config, `postCssVariables`, {})])
+  let postCssVariables = merge.all([{}, require('@pleasure-js/ui-vue/postcss.variables'), get(config, `postCssVariables`, {})])
   postCssVariables = mapKeys(dot.dot(postCssVariables), (v, k) => kebabCase(k).replace(/-default$/, ''))
   // console.log({ postCssVariables })
 
@@ -300,7 +300,7 @@ export default function Pleasure (options) {
   this.options.build.postcss.plugins['postcss-calc'] = true
 
   // important
-  const addTranspile = ['pleasure', 'pleasure-ui-nuxt', 'pleasure-ui-vue', 'pleasure-api-client', pleasurePlugin]
+  const addTranspile = ['@pleasure-js', '@pleasure-js/ui-nuxt', '@pleasure-js/ui-vue', '@pleasure-js/api-client', pleasurePlugin]
   const transpile = addTranspile.filter(v => /*v !== 'pleasure-ui-nuxt' &&*/ v !== 'pleasure')
 
   const findPkg = (pkgName, ...paths) => {
@@ -335,7 +335,7 @@ export default function Pleasure (options) {
     // console.log({ suiteNodeModules, suitePath }, fs.existsSync(suitePath), fs.existsSync(suiteNodeModules))
   }
 
-  // this.options.modulesDir.push(path.join(require.resolve('pleasure-ui-vue'), 'node_modules'))
+  // this.options.modulesDir.push(path.join(require.resolve('@pleasure-js/ui-vue'), 'node_modules'))
 
   // todo: add yarn global node_modules
   // console.log(this.options.modulesDir)
@@ -372,14 +372,14 @@ export default function Pleasure (options) {
     routes.push({
       // todo: make path configurable via pleasure.config.js
       path: '/pleasure/create/:entity',
-      component: require.resolve('pleasure-ui-vue/src/ui/pages/pleasure-create.vue')
+      component: require.resolve('@pleasure-js/ui-vue/src/ui/pages/pleasure-create.vue')
     })
 
     // update
     routes.push({
       // todo: make path configurable via pleasure.config.js
       path: '/pleasure/update/:entity/:entry',
-      component: require.resolve('pleasure-ui-vue/src/ui/pages/pleasure-update.vue')
+      component: require.resolve('@pleasure-js/ui-vue/src/ui/pages/pleasure-update.vue')
     })
 
     // list

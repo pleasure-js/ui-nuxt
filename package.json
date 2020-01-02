@@ -1,12 +1,12 @@
 {
-  "name": "pleasure-ui-nuxt",
+  "name": "@pleasure-js/ui-nuxt",
   "version": "1.0.0",
   "main": "dist/pleasure-ui-nuxt.js",
   "module": "dist/pleasure-ui-nuxt.esm.js",
   "author": "Martin Rafael Gonzalez <tin@devtin.io>",
   "license": "MIT",
   "scripts": {
-    "build": "rollup -c rollup.config.js && yarn build:fa",
+    "build": "rollup -c rollup.config.js",
     "build:live": "nodemon -w src -w lib -w rollup.config.js --exec yarn build",
     "build:fa": "node-sass --include-path=node_modules lib/element-ui/style-transpiled.scss dist/element-ui-fa-icons.pcss",
     "lint": "eslint 'src/**/*.{js,vue}'"
@@ -42,10 +42,10 @@
     "font-awesome": "^4.7.0",
     "fs-extra": "^8.1.0",
     "lodash": "^4.17.15",
-    "pleasure-api": "keepwondering/pleasure-api#v1-beta",
-    "pleasure-api-client": "keepwondering/pleasure-api-client#v1-beta",
-    "pleasure-ui-vue": "keepwondering/pleasure-ui-vue#v1-beta",
-    "pleasure-utils": "keepwondering/pleasure-utils#v1-beta",
+    "@pleasure-js/api": "git@github.com:pleasure-js/api.git#v1-beta",
+    "@pleasure-js/api-client": "git@github.com:pleasure-js/api-client.git#v1-beta",
+    "@pleasure-js/ui-vue": "git@github.com:pleasure-js/ui-vue.git#v1-beta",
+    "@pleasure-js/utils": "git@github.com:pleasure-js/utils.git#v1-beta",
     "postcss-calc": "^7.0.1",
     "postcss-color-function": "^4.1.0",
     "postcss-css-variables": "^0.13.0",
@@ -60,8 +60,5 @@
     "postcss-simple-vars": "^5.0.2",
     "vue": "^2.6.10",
     "vue-i18n": "^8.15.0"
-  },
-  "peerDependencies": {
-    "pleasure": "keepwondering/pleasure"
   }
 }

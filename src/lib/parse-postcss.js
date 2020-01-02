@@ -18,7 +18,7 @@ export function parsePostCss (src, dest, { variables = {} } = {}) {
     throw new Error(`both src and dest are required`)
   }
 
-  const defaultVariables = require('pleasure-ui-vue/postcss.variables.js')
+  const defaultVariables = require('@pleasure-js/ui-vue/postcss.variables.js')
 
   variables = mapKeys(dot.dot(merge.all([{}, defaultVariables, variables])), (v, k) => kebabCase(k).replace(/-default$/, ''))
 
