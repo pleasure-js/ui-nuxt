@@ -232,13 +232,13 @@ function Pleasure (options) {
   });
 
   const writeCss = () => {
-    const baseCss = require.resolve('@pleasure-js/ui-vue/dist/pleasure-ui-vue.pcss');
+    const baseCss = require.resolve('@pleasure-js/ui-vue/dist/ui-vue.pcss');
     const pleasureCss = require.resolve('@pleasure-js/ui-vue/src/pleasure.pcss');
     refreshCss([baseCss, pleasureCss], localPleasureCss);
   };
 
   const writeElementUi = () => {
-    refreshCss([require.resolve('@pleasure-js/ui-vue/src/element-ui/element-ui.pcss'), require.resolve('@pleasure-js/ui-vue/dist/pleasure-ui-vue-element.pcss')], localElementUi);
+    refreshCss([require.resolve('@pleasure-js/ui-vue/src/element-ui/element-ui.pcss'), require.resolve('@pleasure-js/ui-vue/dist/ui-vue-element.pcss')], localElementUi);
   };
 
   /*
@@ -257,7 +257,7 @@ function Pleasure (options) {
     });
   }
 
-  // const baseCss = require.resolve('@pleasure-js/ui-vue/dist/pleasure-ui-vue.pcss')
+  // const baseCss = require.resolve('@pleasure-js/ui-vue/dist/ui-vue.pcss')
   const localPleasureCss = findRoot('.pleasure/pleasure.css');
   const localElementUi = findRoot('.pleasure/element-ui.css');
 
@@ -286,9 +286,9 @@ function Pleasure (options) {
 
   // console.log(`env>>>`, this.options.env)
   // console.log(`nuxt>>>`, this.options)
-    this.options.modulesDir.push(...require.main.paths.filter(p => {
-      return this.options.modulesDir.indexOf(p) < 0
-    }));
+  this.options.modulesDir.push(...require.main.paths.filter(p => {
+    return this.options.modulesDir.indexOf(p) < 0
+  }));
 
   const pleasurePlugin = resolve(`lib/nuxt-element-ui-pleasure-plugin.js`);
   this.addPlugin(pleasurePlugin);
@@ -351,8 +351,16 @@ function Pleasure (options) {
   this.options.build.postcss.plugins['postcss-calc'] = true;
 
   // important
-  const addTranspile = ['@pleasure-js', '@pleasure-js/ui-nuxt', '@pleasure-js/ui-vue', '@pleasure-js/api-client', pleasurePlugin];
+  const addTranspile = ['@pleasure-js/ui-nuxt', '@pleasure-js/ui-vue', '@pleasure-js/api-client', pleasurePlugin];
   const transpile = addTranspile.filter(v => /*v !== 'pleasure-ui-nuxt' &&*/ v !== 'pleasure');
+
+  const findPkg = (pkgName, ...paths) => {
+    return path.resolve(path.dirname(require.resolve(pkgName)), '../', ...paths)
+  };
+
+  const findNodeModules = pkgName => {
+    return findPkg(pkgName, 'node_modules')
+  };
 
   this.options.build.transpile.push(/pleasure/);
   if (!this.options.build.babel.include) {
@@ -361,17 +369,17 @@ function Pleasure (options) {
   this.options.build.babel.include.push(...transpile);
   this.options.build.babel.include.push(findRoot());
 
-  /*
-    this.options.modulesDir.unshift(...transpile.map(p => {
-      return findNodeModules(p)
-    }))
-  */
+  this.options.modulesDir.unshift(...transpile.map(p => {
+    return findNodeModules(p)
+  }));
+  this.options.modulesDir.unshift(findNodeModules('nuxt'));
 
   // this.options.modulesDir.unshift(path.join(__dirname, '../node_modules'))
 
   const suiteNodeModules = path.join(__dirname, '../../../node_modules');
   const suitePath = path.join(__dirname, '../../../packages');
 
+  console.log({ suitePath, suiteNodeModules });
   if (fs.existsSync(suitePath) && fs.existsSync(suiteNodeModules)) {
     this.options.modulesDir.unshift(suiteNodeModules);
   }
