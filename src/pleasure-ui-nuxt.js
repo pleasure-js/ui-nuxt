@@ -173,8 +173,12 @@ export default function Pleasure (options) {
 
   const middlewarePath = path.join(this.options.srcDir, 'middleware')
   mkdirpSync(middlewarePath)
+  // copy middleware sync
+  const middlewares = findRoot(this.options.srcDir, 'middleware')
+  mkdirpSync(middlewares)
+  fs.copyFileSync(require.resolve('@pleasure-js/ui-vue/src/lib/pleasure-middleware-load-session.js'), path.join(middlewares, 'pleasure-middleware-load-session.js'))
   this.options.router.middleware.push('pleasure-middleware-load-session')
-  // this.options.router.middleware.push(require('@pleasure-js/ui-vue/src/lib/middleware-load-session.js'))
+  // this.options.router.middleware.push(require.resolve('@pleasure-js/ui-vue/src/lib/pleasure-middleware-load-session.js'))
 
   this.nuxt.hook('build:compile', (payload) => {
     // console.log(`building from pleasure-nuxt`, payload)

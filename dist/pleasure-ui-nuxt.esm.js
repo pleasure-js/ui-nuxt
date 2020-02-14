@@ -9,7 +9,7 @@ import mapKeys from 'lodash/mapKeys';
 import fs from 'fs';
 import omit from 'lodash/omit';
 import { getPlugins, getConfig as getConfig$1 } from '@pleasure-js/api';
-import { getConfig, findConfig, findRoot } from '@pleasure-js/utils';
+import { getConfig, findRoot, findConfig } from '@pleasure-js/utils';
 import postcss from 'postcss';
 import postCssVariables from 'postcss-css-variables';
 import postCssExtend from 'postcss-extend';
@@ -224,8 +224,12 @@ function Pleasure (options) {
 
   const middlewarePath = path.join(this.options.srcDir, 'middleware');
   mkdirpSync(middlewarePath);
+  // copy middleware sync
+  const middlewares = findRoot(this.options.srcDir, 'middleware');
+  mkdirpSync(middlewares);
+  fs.copyFileSync(require.resolve('@pleasure-js/ui-vue/src/lib/pleasure-middleware-load-session.js'), path.join(middlewares, 'pleasure-middleware-load-session.js'));
   this.options.router.middleware.push('pleasure-middleware-load-session');
-  // this.options.router.middleware.push(require('@pleasure-js/ui-vue/src/lib/middleware-load-session.js'))
+  // this.options.router.middleware.push(require.resolve('@pleasure-js/ui-vue/src/lib/pleasure-middleware-load-session.js'))
 
   this.nuxt.hook('build:compile', (payload) => {
     // console.log(`building from pleasure-nuxt`, payload)
